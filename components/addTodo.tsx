@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Button } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Alert } from 'react-native';
 
 interface AddTodo {
     pressHandler(text: string): void
@@ -13,6 +13,23 @@ export default ({pressHandler}: AddTodo): JSX.Element => {
         setText(inputText);
     }
 
+    const onPressed = (): void => {
+        if(text.length < 3) {
+            Alert.alert("너무 조금 썼다.", "3자 이상. 24자 이하.", [{
+                text: 'ㅠㅠ ㅇㅋ',
+                onPress: () => setText(''),
+            }])
+            return;
+        } else if(text.length > 24) {
+            Alert.alert("너무 많이 썼다.", "3자 이상. 24자 이하.", [{
+                text: 'ㅠㅠ ㅇㅋ;;',
+                onPress: () => setText(text.slice(0, 24)),
+            }])
+            return;
+        }
+        pressHandler(text);
+    }
+
     return (
         <View>
             <TextInput
@@ -22,7 +39,7 @@ export default ({pressHandler}: AddTodo): JSX.Element => {
             />
             <View style={styles.btn}>
                 <Button
-                    onPress={() => pressHandler(text)}
+                    onPress={() => onPressed()}
                     title='할 일 추가'
                     color="coral"
                 />
