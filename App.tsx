@@ -1,34 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
+import AddTodo from './components/addTodo';
+import Header from "./components/header";
+import TodoLists from './components/todoLists';
 
-export default function App() {
-  const [name, setName] = useState('Lee');
-  const [age, setAge] = useState(27);
+export default function App(): JSX.Element {
+  const [todos, setTodos] = useState([
+    {
+      text: "Hey!",
+      key: '1'
+    }
+  ]);
+
+  const onTouchablePress = (key: string): void => setTodos(() => todos.filter(ele => ele.key !== key));
+  const onAddPress = (text: string): void => setTodos((prev) => [
+    {
+      text,
+      key: (prev.length + 1).toString(),
+    },
+    ...prev
+  ]);
 
   return (
     <View style={styles.container}>
-      <Text>Hi there! my name is {name}.</Text>
-      <Text>I'm {age} years old.</Text>
-      <Text>What's your name?</Text>
-        <TextInput 
-          style={styles.input} 
-          placeholder="What's your name?" 
-          onChangeText={(name) => setName(name.toString())}
-        />
-      <Text>How old are you?</Text>
-        <TextInput 
-          style={styles.input} 
-          placeholder="How old are you?" 
-          onChangeText={(age) => setAge(+age)}
-        />
-      <Text>Diary</Text>
-        <TextInput
-          style={styles.input}
-          multiline
-          keyboardType='numeric'
-        />
-      <StatusBar style="auto" />
+      <Header />
+      <View style={styles.content}>
+        <AddTodo pressHandler={onAddPress} />
+        <View style={styles.list}>
+          <FlatList
+            data={todos}
+            renderItem={({item}): JSX.Element => (
+              <TodoLists item={item} pressHandler={onTouchablePress}/>
+            )}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -37,14 +43,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  input: {
-    borderWidth: 1,
-    borderColor: 'grey',
-    padding: 6,
-    margin: 8,
-    width: 200
-  }
+  content: {
+    paddingHorizontal: 20,
+  },
+  list: {
+    paddingHorizontal: 10,
+  },
 });
