@@ -1,16 +1,18 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
+import { globalStyles } from "../components/styles/global";
 
-export default (): JSX.Element => {
+export default ({ navigation }: any): JSX.Element => {
+  const pressHandler = () => {
+    navigation.goBack();
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <Text>review Detail Screen</Text>
+      <Button title="돌아가기" onPress={() => pressHandler} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 24,
-  },
-});
+const styles = StyleSheet.create({});

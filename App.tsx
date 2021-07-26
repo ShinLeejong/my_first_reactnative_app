@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
-import Home from "./views/home";
+import Navigator from "./routes/drawer";
 
 const getFonts = () =>
   Font.loadAsync({
@@ -13,7 +13,7 @@ export default function App(): JSX.Element | undefined {
   const [init, setInit] = useState(false);
 
   if (init) {
-    return <Home />;
+    return <Navigator />;
   } else {
     return (
       <AppLoading

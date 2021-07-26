@@ -1,20 +1,20 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Button } from "react-native";
+import { globalStyles } from "../components/styles/global";
 
-export default (): JSX.Element => {
+export default ({ navigation }: any): JSX.Element => {
+  const pressHandler = (): void => {
+    navigation.navigate("ReviewDetails");
+    // navigation.push("ReviewDetails");
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleText}>Home Screen</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.titleText}>Home Screen</Text>
+      <Text style={globalStyles.p}>This is a paragraph</Text>
+      <Button title="go to review details" onPress={() => pressHandler} />
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 24,
-  },
-  titleText: {
-    fontFamily: "nunito-bold",
-    fontSize: 18,
-  },
-});
+const styles = StyleSheet.create({});
